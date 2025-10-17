@@ -1,0 +1,73 @@
+# Slidev Presentation Optimization Rules
+
+## Font Size and Content Density
+- Use `text-sm` class for content-heavy slides to improve readability
+- Apply smaller fonts to slides with:
+  - Multiple tables
+  - Long code blocks
+  - Detailed technical specifications
+  - Parameter lists
+  - Comparison data
+
+## Table and Code Block Management
+- **Avoid stacking multiple tables vertically** on the same slide
+- **Split slides** when you have:
+  - Tables followed by paragraphs or additional content
+  - Large code blocks followed by explanations
+  - Multiple related but distinct data structures
+- Use compact bullet-point formats instead of tables when possible
+- Convert table data to inline summaries when space is limited
+
+## Slide Content Organization
+- **One main concept per slide** - avoid cramming multiple topics
+- **Split content-heavy slides** into focused, single-purpose slides
+- Move paragraphs that come after tables/code blocks to the next slide
+- Move large lists or blocks of information to separate slides
+
+## Two-Column Layout Optimization
+- Use `::right::` directive properly in two-column layouts
+- Ensure both columns have consistent formatting
+- Apply `text-sm` to both columns for content-heavy slides
+- Balance content between left and right columns
+
+## Code Block Best Practices
+- Keep code blocks focused and concise
+- Split slides when code blocks are followed by additional content
+- Use appropriate syntax highlighting
+- Include brief explanations before or after code blocks
+
+## Table Optimization
+- Convert multi-column tables to bullet points when possible
+- Use inline summaries for simple comparisons
+- Split complex tables across multiple slides
+- Focus on key metrics rather than exhaustive data
+
+## Slide Flow and Readability
+- Maintain consistent formatting across similar slide types
+- Use clear, descriptive slide titles
+- Group related information logically
+- Ensure each slide has a clear purpose and message
+
+## Memory and Performance Considerations
+- Keep slides focused to prevent vertical overflow
+- Use appropriate font sizes for different content types
+- Balance information density with readability
+- Test presentation flow and timing
+
+## Content Hierarchy
+- Use consistent heading levels (###, ####)
+- Apply appropriate emphasis (bold, italic) sparingly
+- Maintain visual hierarchy with proper spacing
+- Use bullet points and numbered lists effectively
+
+## Technical Content Presentation
+- Split technical details from advantages/limitations
+- Separate parameter tables from explanatory content
+- Use code blocks for implementation details
+- Provide context before showing technical specifications
+
+## Slidev-Specific Rules
+- Fix Vue template syntax errors (proper `::right::` usage)
+- Use appropriate Slidev layouts (center, two-cols, etc.)
+- Apply consistent class names for styling
+- Ensure proper markdown table syntax

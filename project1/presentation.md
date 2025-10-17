@@ -104,8 +104,7 @@ Understanding the Problem and Methodology
 
 ## Dataset: 20 Newsgroups
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Dataset Characteristics
 - **Source**: 20 Newsgroups corpus
@@ -121,7 +120,12 @@ Understanding the Problem and Methodology
 - **Total Used**: 2,997 samples (memory-optimized)
 
 </div>
-<div>
+
+---
+
+## Dataset: Why 20 Newsgroups?
+
+<div class="text-sm">
 
 ### Class Distribution
 ```python
@@ -129,26 +133,24 @@ Positive samples: ~44% (technical topics)
 Negative samples: ~56% (remaining topics)
 ```
 
-### Why This Dataset?
+### Advantages
 ✅ Publicly available  
 ✅ Fast to load and process  
 ✅ Memory-efficient (10GB RAM limit)  
 ✅ Real-world text complexity  
 ✅ Demonstrates generalization ability
 
-<div class="text-sm mt-4 p-2 bg-blue-50 rounded">
+<div class="text-xs mt-4 p-2 bg-blue-50 rounded">
 💡 <strong>Note</strong>: Smaller dataset requires careful regularization to prevent overfitting
 </div>
 
 </div>
-</div>
 
 ---
 
-## Hardware Constraints & Optimizations
+## Hardware Constraints
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Resource Limitations
 - **RAM Limit**: 10GB maximum
@@ -159,27 +161,38 @@ Negative samples: ~56% (remaining topics)
   - Sequential training (one model at a time)
   - Memory-efficient data structures
 
-### Optimization Strategies
-1. **Model Size Reduction**
-   - 64-dim embeddings (not 256+)
-   - Single/few layers
-   - ~300K-500K parameters per model
+</div>
+
+---
+
+## Optimization Strategies
+
+<div class="text-sm">
+
+### 1. Model Size Reduction
+- 64-dim embeddings (not 256+)
+- Single/few layers
+- ~300K-500K parameters per model
+
+### 2. Memory Management
+- Batch size: 16 for custom models, 8 for DistilBERT
+- Sequential training with cleanup
+- DistilBERT instead of BERT (40% smaller)
+- Frozen transformer layers
+
+### 3. Data Efficiency
+- Limited samples (2,997 total)
+- Truncated sequences (64 tokens max)
+- Vocabulary cap (5,000 words)
 
 </div>
-<div>
 
-2. **Memory Management**
-   - Batch size: 16 for custom models, 8 for DistilBERT
-   - Sequential training with cleanup
-   - DistilBERT instead of BERT (40% smaller)
-   - Frozen transformer layers
+---
 
-3. **Data Efficiency**
-   - Limited samples (2,997 total)
-   - Truncated sequences (64 tokens max)
-   - Vocabulary cap (5,000 words)
+## Memory Usage Summary
 
-### Memory Usage
+<div class="text-sm">
+
 | Component | RAM |
 |-----------|-----|
 | Data Loading | ~500MB |
@@ -187,7 +200,8 @@ Negative samples: ~56% (remaining topics)
 | DistilBERT | ~2-3GB |
 | **Total Peak** | **~4-5GB** ✅ |
 
-</div>
+**Result**: Comfortably fits within 10GB RAM limit with headroom for OS and other processes.
+
 </div>
 
 ---
@@ -203,8 +217,7 @@ Ensuring Quality and Preventing Data Leakage
 
 ## Text Preprocessing Steps
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Stage 1: Text Cleaning
 ```python
@@ -225,9 +238,12 @@ Ensuring Quality and Preventing Data Leakage
 ```
 
 </div>
-<div>
 
-### Example Transformation
+---
+
+## Preprocessing Example
+
+<div class="text-sm">
 
 **Original Text**:
 ```
@@ -251,14 +267,12 @@ for more info! <b>Special Offer!!!</b>"
 </div>
 
 </div>
-</div>
 
 ---
 
 ## Critical Issue: Data Overlap
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Problem Discovered
 - **Initial State**: sklearn split produced clean separation
@@ -279,9 +293,12 @@ for more info! <b>Special Offer!!!</b>"
 ```
 
 </div>
-<div>
 
-### Solution Implemented
+---
+
+## Data Overlap: Solution
+
+<div class="text-sm">
 
 **Post-Processing Filter**:
 ```python
@@ -294,6 +311,14 @@ indices_to_keep_val = [
 ]
 ```
 
+</div>
+
+---
+
+## Data Overlap: Results
+
+<div class="text-sm">
+
 ### Results
 | Metric | Before | After |
 |--------|--------|-------|
@@ -302,21 +327,20 @@ indices_to_keep_val = [
 | Test samples | 500 | 498 ✅ |
 | **Overlaps** | **3** ❌ | **0** ✅ |
 
-<div class="text-sm mt-2 p-2 bg-green-50 rounded">
+<div class="text-xs mt-2 p-2 bg-green-50 rounded">
 ✅ <strong>Zero data leakage</strong> - Clean train/val/test separation
 </div>
 
 </div>
-</div>
 
 ---
 
-## Tokenization Strategy
+## Tokenization Strategy: Simple Tokenizer
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
-### Simple Tokenizer (RNN/LSTM/Transformer)
+### Used for: RNN, LSTM, Custom Transformer
+
 ```python
 Vocabulary: 5,000 most common words
 Special tokens: <PAD>, <UNK>
@@ -328,16 +352,22 @@ Example:
 "unknown_word" → [1] (UNK token)
 ```
 
-**Advantages**:
+### Advantages
 - ✅ Fast and memory-efficient
 - ✅ Full control over vocabulary
 - ✅ Simple to understand
 - ✅ No external dependencies
 
 </div>
-<div>
 
-### BERT Tokenizer (DistilBERT)
+---
+
+## Tokenization Strategy: BERT Tokenizer
+
+<div class="text-sm">
+
+### Used for: DistilBERT
+
 ```python
 Vocabulary: 30,522 WordPiece tokens
 Pre-trained tokenization
@@ -349,20 +379,28 @@ Example:
 [CLS] neural networks [SEP]
 ```
 
-**Advantages**:
+### Advantages
 - ✅ Subword tokenization
 - ✅ Handles rare words better
 - ✅ Pre-trained compatibility
 - ✅ Industry standard
 
 </div>
-</div>
 
-### Vocabulary Coverage
+---
+
+## Vocabulary Coverage Comparison
+
+<div class="text-sm">
+
 | Tokenizer | Vocab Size | Coverage | OOV Handling |
 |-----------|------------|----------|--------------|
 | Simple | 5,000 | ~85% | Map to `<UNK>` |
 | BERT | 30,522 | ~99% | Subword split |
+
+**Key Insight**: BERT's subword tokenization provides near-complete coverage, while simple tokenizer trades coverage for speed and simplicity.
+
+</div>
 
 ---
 layout: center
@@ -377,8 +415,7 @@ Four Different Approaches to Sequence Classification
 
 ## Model 1: Recurrent Neural Network (RNN)
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Architecture Overview
 ```python
@@ -402,9 +439,14 @@ Classifier (64 → 2)
 - **Simple Architecture**: Baseline model
 
 </div>
-<div>
 
-### Technical Details
+---
+
+## RNN: Technical Details
+
+<div class="text-sm">
+
+### Parameters
 | Parameter | Value |
 |-----------|-------|
 | Embedding Dim | 64 |
@@ -413,6 +455,14 @@ Classifier (64 → 2)
 | Dropout | 0.3 |
 | Parameters | ~300K |
 | Bidirectional | No |
+
+</div>
+
+---
+
+## RNN: Advantages & Limitations
+
+<div class="text-sm">
 
 ### Advantages
 ✅ Fast training  
@@ -427,14 +477,12 @@ Classifier (64 → 2)
 ❌ Struggles with long sequences
 
 </div>
-</div>
 
 ---
 
 ## Model 2: Long Short-Term Memory (LSTM)
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Architecture Overview
 ```python
@@ -462,9 +510,14 @@ Classifier (64 → 2)
 - **Cell State**: Long-term memory
 
 </div>
-<div>
 
-### Technical Details
+---
+
+## LSTM: Technical Details
+
+<div class="text-sm">
+
+### Parameters
 | Parameter | Value |
 |-----------|-------|
 | Embedding Dim | 64 |
@@ -473,6 +526,14 @@ Classifier (64 → 2)
 | Dropout | 0.3 |
 | Parameters | ~320K |
 | Bidirectional | No |
+
+</div>
+
+---
+
+## LSTM: Advantages & Trade-offs
+
+<div class="text-sm">
 
 ### Advantages Over RNN
 ✅ Long-term dependencies  
@@ -487,14 +548,12 @@ Classifier (64 → 2)
 ⚠️ More complex to understand
 
 </div>
-</div>
 
 ---
 
 ## Model 3: Custom Transformer
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Architecture Overview
 ```python
@@ -517,10 +576,20 @@ Dropout (0.3)
 Classifier (64 → 2)
 ```
 
-</div>
-<div>
+### Key Innovation: Self-Attention
+```
+Attention(Q, K, V) = softmax(QK^T / √d_k)V
+```
 
-### Technical Details
+</div>
+
+---
+
+## Transformer: Technical Details
+
+<div class="text-sm">
+
+### Parameters
 | Parameter | Value |
 |-----------|-------|
 | Embedding Dim | 64 |
@@ -530,10 +599,13 @@ Classifier (64 → 2)
 | Dropout | 0.3 |
 | Parameters | ~400K |
 
-### Key Innovation: Self-Attention
-```
-Attention(Q, K, V) = softmax(QK^T / √d_k)V
-```
+</div>
+
+---
+
+## Transformer: Advantages
+
+<div class="text-sm">
 
 ### Advantages
 ✅ Parallel processing (no sequential constraint)  
@@ -543,14 +615,12 @@ Attention(Q, K, V) = softmax(QK^T / √d_k)V
 ✅ Scalable to large models
 
 </div>
-</div>
 
 ---
 
 ## Model 4: DistilBERT (Pre-trained)
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Architecture Overview
 ```python
@@ -579,9 +649,14 @@ Custom Classifier (TRAINABLE)
 - **Speed**: 60% faster inference
 
 </div>
-<div>
 
-### Technical Details
+---
+
+## DistilBERT: Technical Details
+
+<div class="text-sm">
+
+### Parameters
 | Parameter | Value |
 |-----------|-------|
 | Base Model | distilbert-base-uncased |
@@ -590,6 +665,14 @@ Custom Classifier (TRAINABLE)
 | Frozen Params | 66.8M |
 | Max Length | 128 tokens |
 | Batch Size | 8 (memory constraint) |
+
+</div>
+
+---
+
+## DistilBERT: Pre-training & Benefits
+
+<div class="text-sm">
 
 ### Pre-training Data
 - **BookCorpus**: 800M words
@@ -604,7 +687,6 @@ Custom Classifier (TRAINABLE)
 ✅ Production-ready performance
 
 </div>
-</div>
 
 ---
 layout: two-cols
@@ -612,42 +694,45 @@ layout: two-cols
 
 ## Model Comparison Summary
 
-### Parameter Count
-| Model | Parameters | Trainable |
-|-------|------------|-----------|
-| RNN | 300K | 100% |
-| LSTM | 320K | 100% |
-| Custom Transformer | 400K | 100% |
-| DistilBERT | 66.9M | 0.15% |
+<div class="text-sm">
 
-### Memory Usage
-| Model | Training RAM |
-|-------|-------------|
-| RNN | ~200MB |
-| LSTM | ~250MB |
-| Transformer | ~300MB |
-| DistilBERT | ~2.5GB |
+### Quick Overview
+**RNN**: 300K params, ~200MB RAM, ~30s/epoch  
+**LSTM**: 320K params, ~250MB RAM, ~35s/epoch  
+**Transformer**: 400K params, ~300MB RAM, ~45s/epoch  
+**DistilBERT**: 66.9M params, ~2.5GB RAM, ~60s/epoch
 
-::right::
-
-### Training Speed (per epoch)
-| Model | Time |
-|-------|------|
-| RNN | ~30s |
-| LSTM | ~35s |
-| Transformer | ~45s |
-| DistilBERT | ~60s |
+### Key Trade-offs
+- **Custom Models**: Fast training, low memory, 100% trainable
+- **DistilBERT**: Pre-trained knowledge, high memory, 0.15% trainable
 
 ### Computational Complexity
 - **RNN/LSTM**: O(n) sequential steps
 - **Transformer**: O(n²) attention, but parallel
 - **DistilBERT**: O(n²) attention, frozen encoder
 
+</div>
+
+::right::
+
+<div class="text-sm">
+
 ### Architecture Philosophy
 - **RNN**: Sequential processing
-- **LSTM**: Sequential + memory gates
+- **LSTM**: Sequential + memory gates  
 - **Transformer**: Parallel attention
 - **DistilBERT**: Pre-trained knowledge
+
+### Memory vs Performance
+- **Low Memory**: RNN, LSTM, Transformer
+- **High Performance**: DistilBERT
+- **Balanced**: LSTM, Transformer
+
+### Training Strategy
+- **Custom Models**: Train from scratch
+- **DistilBERT**: Fine-tune classifier only
+
+</div>
 
 ---
 layout: center
@@ -662,8 +747,7 @@ Preventing Overfitting on Small Datasets
 
 ## The Challenge: Dataset Size vs Model Capacity
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Problem Statement
 **Small Dataset** (2,000 training samples)  
@@ -682,7 +766,12 @@ Model memorizes training data instead of learning patterns
 - ❌ Poor generalization to test set
 
 </div>
-<div>
+
+---
+
+## Finding the Right Balance
+
+<div class="text-sm">
 
 ### Historical Issues Faced
 
@@ -703,18 +792,16 @@ Train: 75-85%, Val: 70-80% ← Healthy learning
 Train-val gap: <10% ← Good generalization
 ```
 
-</div>
-</div>
+### The Solution
+**Multi-Layered Regularization** - Combine multiple techniques to find the sweet spot
 
-### The Solution: Multi-Layered Regularization
-Combine multiple techniques to find the sweet spot
+</div>
 
 ---
 
-## Regularization Techniques Applied
+## Regularization Techniques (1/2)
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-<div>
+<div class="text-sm">
 
 ### 1. Dropout (0.3)
 Applied at multiple layers:
@@ -733,66 +820,40 @@ self.dropout_rnn = nn.Dropout(0.3)
 ```
 
 </div>
-<div>
+
+---
+
+## Regularization Techniques (2/2)
+
+<div class="text-sm">
 
 ### 2. Weight Decay (1e-4)
-L2 regularization on parameters
-
-**Formula**:
-```
-Loss = CrossEntropy + λ||W||²
-```
-
-**Effect**:
-- Penalizes large weights
-- Encourages smooth functions
-- Prevents overfitting
+L2 regularization on parameters: `Loss = CrossEntropy + λ||W||²`
 
 ### 3. Label Smoothing (0.05)
-Softens target distributions
-
 **Original**: [0, 1] or [1, 0]  
 **Smoothed**: [0.05, 0.95] or [0.95, 0.05]
 
-**Benefit**: Prevents overconfidence
-
-</div>
-<div>
-
 ### 4. Gradient Clipping
 ```python
-clip_grad_norm_(
-    model.parameters(), 
-    max_norm=1.0
-)
+clip_grad_norm_(model.parameters(), max_norm=1.0)
 ```
 
-**Prevents**: Exploding gradients
-
 ### 5. Early Stopping
-- **Patience**: 3 epochs
-- **Metric**: Validation loss
-- **Action**: Stop if no improvement
+Patience: 3 epochs, Metric: Validation loss
 
 ### 6. Learning Rate Scheduling
 ```python
-ReduceLROnPlateau(
-    patience=3,
-    factor=0.5
-)
+ReduceLROnPlateau(patience=3, factor=0.5)
 ```
 
-Reduces LR when validation loss plateaus
-
-</div>
 </div>
 
 ---
 
 ## Training Hyperparameters
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Optimizer: Adam
 ```python
@@ -811,26 +872,39 @@ optimizer = optim.Adam(
 - ✅ Works well with sparse gradients
 - ✅ Industry standard
 
+</div>
+
+---
+
+## Training: Loss Function
+
+<div class="text-sm">
+
 ### Loss Function
 ```python
-criterion = nn.CrossEntropyLoss(
-    label_smoothing=0.05
-)
+criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
 ```
 
-</div>
-<div>
+**Key Features**:
+- **Cross-Entropy Loss**: Standard for classification
+- **Label Smoothing**: Prevents overconfident predictions
+- **Smoothing Factor**: 0.05 (5% smoothing)
 
-### Training Schedule
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| Max Epochs | 20 | Allow sufficient learning |
-| Early Stop Patience | 3 | Aggressive stopping |
-| LR Schedule Patience | 3 | Adapt quickly |
-| Initial LR | 0.001 | Balanced speed |
-| Batch Size (Custom) | 16 | Memory efficient |
-| Batch Size (BERT) | 8 | Prevent OOM |
-| Gradient Clip | 1.0 | Stability |
+</div>
+
+---
+
+## Training Schedule
+
+<div class="text-sm">
+
+### Key Parameters
+- **Max Epochs**: 20 (allow sufficient learning)
+- **Early Stop**: 3 epochs patience (aggressive stopping)
+- **LR Schedule**: 3 epochs patience (adapt quickly)
+- **Learning Rate**: 0.001 (balanced speed)
+- **Batch Sizes**: 16 (custom models), 8 (DistilBERT)
+- **Gradient Clip**: 1.0 (stability)
 
 ### Overfitting Detection
 ```python
@@ -841,59 +915,62 @@ if train_acc > 85 and (train_acc - val_acc) > 10:
 Real-time monitoring during training
 
 </div>
-</div>
 
 ---
 
 ## Training Process Flow
 
-```mermaid {scale: 0.5}
-graph TD
-    A[Initialize Model] --> B[Load Batch]
-    B --> C[Forward Pass]
-    C --> D[Calculate Loss]
-    D --> E[Backward Pass]
-    E --> F[Clip Gradients]
-    F --> G[Update Weights]
-    G --> H[Apply Dropout]
-    H --> I{Epoch Complete?}
-    I -->|No| B
-    I -->|Yes| J[Validation]
-    J --> K{Val Loss Improved?}
-    K -->|Yes| L[Save Best Model]
-    K -->|No| M[Increment Patience]
-    M --> N{Patience Exceeded?}
-    N -->|Yes| O[Early Stop]
-    N -->|No| P[Reduce LR if Plateau]
-    L --> P
-    P --> Q{Max Epochs?}
-    Q -->|No| B
-    Q -->|Yes| R[Load Best Model]
-    O --> R
-    R --> S[Test Evaluation]
+```mermaid {scale: 0.35, theme: 'neutral'}
+graph LR
+    A[Initialize] --> B[Batch]
+    B --> C[Forward]
+    C --> D[Loss]
+    D --> E[Backward]
+    E --> F[Clip Grad]
+    F --> G[Update]
+    G --> H{Epoch?}
+    H -->|No| B
+    H -->|Yes| I[Validate]
+    I --> J{Improved?}
+    J -->|Yes| K[Save]
+    J -->|No| L[Patience++]
+    L --> M{Stop?}
+    M -->|Yes| N[Load Best]
+    M -->|No| O[Reduce LR]
+    K --> O
+    O --> P{Max?}
+    P -->|No| B
+    P -->|Yes| N
+    N --> Q[Test]
 ```
+
+**Flow**: Initialize → Training Loop → Validation → Early Stopping → Test Evaluation
 
 ---
 
 ## Why Sequential Training?
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
 ### Memory Constraint: 10GB RAM
 
 **Problem**: Training all models simultaneously
 ```python
-RNN (200MB) + 
-LSTM (250MB) + 
-Transformer (300MB) + 
-DistilBERT (2.5GB) +
-Data (500MB) +
+RNN (200MB) + LSTM (250MB) + Transformer (300MB) + 
+DistilBERT (2.5GB) + Data (500MB) + 
 Gradients & Optimizer states (2GB)
 = ~6GB (feasible but risky)
 ```
 
 **Risk**: Memory spikes, swapping, crashes
+
+</div>
+
+---
+
+## Sequential Training: Solution
+
+<div class="text-sm">
 
 ### Sequential Solution
 ```python
@@ -906,7 +983,10 @@ Gradients & Optimizer states (2GB)
 **Result**: Peak memory ~3-4GB ✅
 
 </div>
-<div>
+
+---
+
+## Sequential Training: Implementation
 
 ### Memory Management Code
 ```python
@@ -932,14 +1012,6 @@ clear_memory()
 ⚠️ Takes longer overall  
 ⚠️ Can't ensemble during training
 
-### Time Investment
-- **Parallel** (if possible): ~20 min
-- **Sequential** (our approach): ~40 min
-- **Benefit**: Guaranteed completion
-
-</div>
-</div>
-
 ---
 layout: center
 class: text-center
@@ -953,44 +1025,36 @@ Performance Comparison and Insights
 
 ## Expected Performance Results
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
-### Model Accuracy Comparison
-| Model | Train Acc | Val Acc | Test Acc | Gap |
-|-------|-----------|---------|----------|-----|
-| **RNN** | 56.43% | 56.43% | 56.43% | 0% |
-| **LSTM** | 56.43% | 56.43% | 56.43% | 0% |
-| **Transformer** | 74.10% | 74.10% | 74.10% | 0% |
-| **DistilBERT** | 61.45% | 61.45% | 61.45% | 0% |
+### Model Performance Summary
+**RNN & LSTM**: 56.43% (identical results - overfitting issues)  
+**Transformer**: 74.10% (+17.67% improvement via attention)  
+**DistilBERT**: 61.45% (-12.65% below expectations)
 
-### Key Observations
-1. **RNN = LSTM**: 56.43% (identical results)
-   - Indicates overfitting issues not fully resolved
-   - Both models converged to same trivial solution
-
-2. **Transformer > RNN/LSTM**: +17.67% improvement
-   - Attention mechanism significantly more powerful
-   - Only custom model that learned effectively
-
-3. **DistilBERT < Transformer**: -12.65% worse
-   - Underperformed expectations (61.45% vs 74.10%)
-   - May need different hyperparameters or training approach
-
-</div>
-<div>
+### Key Insights
+- **RNN = LSTM**: Identical results indicate overfitting not fully resolved
+- **Transformer**: Attention mechanism significantly more powerful
+- **DistilBERT**: Underperformed despite pre-training advantages
 
 ### Performance Metrics
+- **Precision & Recall**: 0.65-0.88 (balanced across models)
+- **F1-Score**: 0.70-0.80 (consistent with accuracy)
+- **No severe class imbalance** issues detected
 
-**Precision & Recall**:
-- All models: 0.65-0.88 (balanced)
-- No severe class imbalance issues
+</div>
 
-**F1-Score**:
-- RNN: 0.4071
-- LSTM: 0.4071
-- Transformer: 0.7227
-- DistilBERT: 0.5155
+---
+
+## Detailed Performance Analysis
+
+<div class="text-sm">
+
+### F1-Score Breakdown
+- **RNN**: 0.4071 (poor performance)
+- **LSTM**: 0.4071 (identical to RNN)
+- **Transformer**: 0.7227 (best performance)
+- **DistilBERT**: 0.5155 (moderate performance)
 
 ### Confusion Matrix Patterns
 ```
@@ -1000,19 +1064,15 @@ True Negatives: 70-85%
 False Negatives: 15-30%
 ```
 
-**Insight**: Models slightly better at negatives (majority class)
+**Key Finding**: Transformer shows most balanced performance across all metrics
 
 </div>
-</div>
+
+**Insight**: Models slightly better at negatives (majority class)
 
 ---
 
-## Training Curves Analysis
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Healthy Training Pattern ✅
+## Training Curves: Healthy Pattern ✅
 
 ```
 Epoch 1: Train 65%, Val 62% ← Learning starts
@@ -1028,101 +1088,71 @@ Epoch 7: Train 79%, Val 74% ← Plateau
 - Validation loss decreasing
 - No divergence (overfitting sign)
 
-### What We Avoided ❌
+---
 
-**Overfitting Pattern**:
+## Training Curves: What We Avoided
+
+**Overfitting Pattern** ❌:
 ```
 Train: 60→70→85→95→99%
 Val:   58→66→68→66→65%
 ```
 Train keeps improving, val degrades
 
-</div>
-<div>
-
-**Underfitting Pattern**:
+**Underfitting Pattern** ❌:
 ```
 Train: 50→53→55→56%
 Val:   50→52→54→56%
 ```
-Both stuck at low accuracy (iteration 2 issue)
+Both stuck at low accuracy
 
 ### Loss Curves
 - **Train Loss**: Smooth decrease to ~0.4-0.6
 - **Val Loss**: Parallel decrease to ~0.5-0.7
 - **Gap**: ~0.1 (healthy)
 
-### Learning Rate Schedule
-```
-Epoch 1-5:  LR = 0.001 (initial)
-Epoch 6-10: LR = 0.0005 (reduced)
-Epoch 11+:  LR = 0.00025 (reduced again)
-```
+---
 
-Adaptive scheduling helps fine-tune
+## Model Efficiency: Training & Memory
 
-</div>
+<div class="text-sm">
+
+### Training Time Summary
+**RNN**: 30s/epoch → ~5 min total  
+**LSTM**: 35s/epoch → ~6 min total  
+**Transformer**: 45s/epoch → ~8 min total  
+**DistilBERT**: 60s/epoch → ~3 min total (fewer epochs)
+
+**Total Project**: ~25-30 minutes
+
+### Memory Footprint
+- **Custom Models**: 200-300MB (low memory)
+- **DistilBERT**: 2.8GB (high memory)
+- **Sequential Peak**: 3.2GB ✅
+
 </div>
 
 ---
 
-## Model Efficiency Analysis
+## Model Efficiency: Performance & Inference
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
+<div class="text-sm">
 
-### Parameters vs Performance
-
-```
-Accuracy per Million Parameters:
-
-RNN:        220-240 acc/M params
-LSTM:       219-244 acc/M params  
-Transformer: 183-205 acc/M params
-DistilBERT:  1.2-1.3 acc/M params
-```
-
-**Insight**: Custom models more parameter-efficient, but DistilBERT has pre-training advantage
-
-### Training Time Comparison
-| Model | Time/Epoch | Total Time |
-|-------|------------|------------|
-| RNN | 30s | ~5 min |
-| LSTM | 35s | ~6 min |
-| Transformer | 45s | ~8 min |
-| DistilBERT | 60s | ~3 min (fewer epochs) |
-
-**Total Project**: ~25-30 minutes
-
-</div>
-<div>
-
-### Memory Footprint
-```
-Peak Memory During Training:
-
-RNN:        ~200MB
-LSTM:       ~250MB
-Transformer: ~300MB
-DistilBERT: ~2.8GB
-
-Sequential Peak: ~3.2GB ✅
-Parallel Would Be: ~3.6GB (risky)
-```
+### Efficiency Metrics
+**Accuracy per Million Parameters**:
+- **RNN**: 220-240 acc/M params
+- **LSTM**: 219-244 acc/M params  
+- **Transformer**: 183-205 acc/M params
+- **DistilBERT**: 1.2-1.3 acc/M params
 
 ### Inference Speed (CPU)
-| Model | Samples/sec |
-|-------|-------------|
-| RNN | ~150 |
-| LSTM | ~130 |
-| Transformer | ~100 |
-| DistilBERT | ~40 |
+- **RNN**: ~150 samples/sec
+- **LSTM**: ~130 samples/sec
+- **Transformer**: ~100 samples/sec
+- **DistilBERT**: ~40 samples/sec
 
-**Production Trade-off**:
-- Custom models: Fast inference, moderate accuracy
-- DistilBERT: Slower inference, best accuracy
+**Production Trade-off**: Custom models = fast inference, DistilBERT = best accuracy
 
-</div>
 </div>
 
 ---
@@ -1184,12 +1214,9 @@ Problems Encountered and How We Solved Them
 
 ---
 
-## Challenge 1: Data Overlap
+## Challenge 1: Data Overlap - Problem
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Problem
+### Issue Discovery
 ```python
 sklearn.train_test_split() 
   → Clean separation ✅
@@ -1197,11 +1224,10 @@ sklearn.train_test_split()
 Text preprocessing
   → 3 duplicates across splits ❌
   
-Cause: Different texts → 
-       Same cleaned text
+Cause: Different texts → Same cleaned text
 ```
 
-**Impact**:
+### Impact
 - Data leakage between splits
 - Overestimated validation performance
 - Invalid test results
@@ -1214,10 +1240,10 @@ overlaps = len(train_set.intersection(val_set))
 print(f"Overlaps: {overlaps}")  # 3 ❌
 ```
 
-</div>
-<div>
+---
 
-### Solution
+## Challenge 1: Data Overlap - Solution
+
 ```python
 # Post-processing filter
 def remove_overlaps(train, val, test):
@@ -1240,17 +1266,11 @@ def remove_overlaps(train, val, test):
 ### Lesson Learned
 Always verify data separation **AFTER** preprocessing, not just before
 
-</div>
-</div>
-
 ---
 
-## Challenge 2: Empty Texts After Preprocessing
+## Challenge 2: Empty Texts - Problem
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Problem
+### Issue
 ```python
 Original: "!!! ### @@@ ---"
 After cleaning: ""  # Empty!
@@ -1263,7 +1283,7 @@ RuntimeError: Length of all samples
 has to be greater than 0 ❌
 ```
 
-**Why it happens**:
+### Why it happens
 - Aggressive stopword removal
 - Special character removal
 - Short texts with only punctuation
@@ -1273,10 +1293,10 @@ has to be greater than 0 ❌
 - Inconsistent behavior
 - Data loss
 
-</div>
-<div>
+---
 
-### Solution
+## Challenge 2: Empty Texts - Solution
+
 ```python
 def filter_empty_texts(texts, labels):
     """Remove empty texts after preprocessing"""
@@ -1296,24 +1316,16 @@ train_texts, train_labels = filter_empty_texts(
 )
 ```
 
-**Additional Fix**: Simplified RNN/LSTM forward pass (removed pack_padded_sequence for stability)
+**Additional Fix**: Simplified RNN/LSTM forward pass
 
 ### Result
-- No runtime errors ✅
-- Stable training ✅
-- ~5-10 samples filtered (negligible loss)
-
-</div>
-</div>
+✅ No runtime errors · ✅ Stable training · ✅ ~5-10 samples filtered (negligible)
 
 ---
 
-## Challenge 3: Identical Model Results (56.43%)
+## Challenge 3: Identical Results - Problem
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Problem
+### Issue
 ```
 RNN:        56.43% accuracy
 LSTM:       56.43% accuracy  
@@ -1322,27 +1334,25 @@ Transformer: 56.43% accuracy
 All identical! ❌
 ```
 
-**Root Cause**: Over-regularization
+### Root Cause: Over-regularization
 - Dropout: 0.6 (too high)
 - Weight decay: 1e-2 (too high)
 - Learning rate: 0.0005 (too low)
 - Model size: 16 dims (too small)
 
-**What happened**:
-Models couldn't learn patterns, defaulted to predicting majority class (~56% of data)
+**What happened**: Models defaulted to predicting majority class
 
 ### Detection
 ```python
 predictions = model.predict(test_data)
-unique_predictions = set(predictions)
-print(unique_predictions)  # {0} 
-# Only predicting class 0!
+print(set(predictions))  # {0} - Only predicting class 0!
 ```
 
-</div>
-<div>
+---
 
-### Solution: Balanced Regularization
+## Challenge 3: Identical Results - Solution
+
+### Balanced Regularization
 ```python
 # BEFORE (too restrictive)
 embedding_dim = 16
@@ -1361,25 +1371,16 @@ weight_decay = 1e-4 ← 100x decrease
 
 ### Result
 ```
-RNN:        65-75% ✅ Different!
-LSTM:       70-80% ✅ Better!
-Transformer: 75-85% ✅ Best custom!
+RNN:        65-75% ✅  |  LSTM:       70-80% ✅  |  Transformer: 75-85% ✅
 ```
 
-### Lesson: Find the Sweet Spot
-Neither extreme works - balance is key
-
-</div>
-</div>
+**Lesson**: Find the sweet spot - neither extreme works
 
 ---
 
-## Challenge 4: BERT Memory Issues
+## Challenge 4: BERT Memory - Problem
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Problem
+### Issue
 ```python
 bert_model = BERTModel(
     model_name='bert-base-uncased'
@@ -1390,23 +1391,20 @@ RuntimeError: Out of Memory
 Process killed (OOM)
 ```
 
-**BERT-base Requirements**:
+### BERT-base Requirements
 - Parameters: 110M
 - Training RAM: 4-6GB
 - With overhead: 7-9GB
 - Our limit: 10GB ❌
 
 ### Why BERT is Large
-- 12 transformer layers
-- 768 hidden dimensions
-- 12 attention heads per layer
-- Pooler layer
-- Large vocabulary (30,522 tokens)
+12 transformer layers · 768 hidden dims · 12 attention heads · Pooler layer · 30,522 vocab
 
-</div>
-<div>
+---
 
-### Solution: Use DistilBERT
+## Challenge 4: BERT Memory - Solution
+
+### Use DistilBERT
 ```python
 bert_model = BERTModel(
     model_name='distilbert-base-uncased',
@@ -1415,32 +1413,24 @@ bert_model = BERTModel(
 )  # 66M parameters, 99K trainable
 ```
 
-**DistilBERT Advantages**:
+### DistilBERT Advantages
 - 40% smaller (66M vs 110M params)
 - 60% faster inference
-- 97% of BERT's performance ✅
+- 97% of BERT's performance
 - Fits in 2-3GB RAM ✅
 
 ### Additional Optimizations
 ```python
-batch_size = 8  # Instead of 16
-max_length = 128  # Instead of 512
-freeze_bert = True  # Don't train encoder
+batch_size = 8  |  max_length = 128  |  freeze_bert = True
 ```
 
 **Result**: Training successful within 10GB ✅
 
-</div>
-</div>
-
 ---
 
-## Challenge 5: DistilBERT pooler_output Error
+## Challenge 5: DistilBERT pooler_output - Problem
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Problem
+### Error
 ```python
 outputs = self.bert(input_ids, attention_mask)
 pooled = outputs.pooler_output
@@ -1449,20 +1439,19 @@ AttributeError: 'BaseModelOutput'
 object has no attribute 'pooler_output'
 ```
 
-**Root Cause**:
+### Root Cause
 - BERT-base HAS `pooler_output` ✅
 - DistilBERT DOESN'T HAVE it ❌
 - DistilBERT is "distilled" (simplified)
 
 ### Why DistilBERT Removed It
-- Pooler layer adds parameters
-- Not essential for classification
-- [CLS] token sufficient
+Pooler layer adds parameters · Not essential · [CLS] token is sufficient
 
-</div>
-<div>
+---
 
-### Solution: Universal Forward Pass
+## Challenge 5: DistilBERT pooler_output - Solution
+
+### Universal Forward Pass
 ```python
 def forward(self, input_ids, attention_mask):
     outputs = self.bert(
@@ -1481,14 +1470,8 @@ def forward(self, input_ids, attention_mask):
     return self.classifier(pooled)
 ```
 
-**Benefits**:
-✅ Works with BERT-base  
-✅ Works with DistilBERT  
-✅ Works with RoBERTa  
-✅ Universal solution
-
-</div>
-</div>
+### Benefits
+✅ Works with BERT-base · ✅ DistilBERT · ✅ RoBERTa · ✅ Universal solution
 
 ---
 layout: center
@@ -1636,30 +1619,26 @@ print(f"RAM: {process.memory_info().rss / 1e9:.2f}GB")
 
 ---
 
-## Production Deployment Recommendations
+## Production Deployment: Model Selection
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Model Selection Criteria
-
-**For High-Accuracy Applications**:
+### For High-Accuracy Applications
 - Use DistilBERT
 - Accept slower inference
 - Examples: Content moderation, sentiment analysis API
 
-**For Real-Time Applications**:
+### For Real-Time Applications
 - Use LSTM or small Transformer
 - 3-5x faster than DistilBERT
 - Examples: Chat sentiment, live feed analysis
 
-**For Resource-Constrained**:
+### For Resource-Constrained Environments
 - Use RNN
 - Smallest footprint
 - Examples: Mobile apps, edge devices
 
-</div>
-<div>
+---
+
+## Production Deployment: Checklist & API
 
 ### Deployment Checklist
 - [ ] Model quantization (INT8)
@@ -1671,26 +1650,15 @@ print(f"RAM: {process.memory_info().rss / 1e9:.2f}GB")
 - [ ] Fallback model (smaller, faster)
 - [ ] Regular retraining schedule
 
-### API Design
+### API Design Example
 ```python
 @app.post("/predict")
 async def predict(text: str):
-    # Preprocess
     cleaned = preprocess(text)
-    
-    # Inference
     sentiment = model.predict(cleaned)
     confidence = model.predict_proba(cleaned)
-    
-    return {
-        "sentiment": sentiment,
-        "confidence": confidence,
-        "processing_time_ms": elapsed
-    }
+    return {"sentiment": sentiment, "confidence": confidence}
 ```
-
-</div>
-</div>
 
 ---
 layout: center
@@ -1762,63 +1730,51 @@ Each innovation addresses limitations of predecessors
 
 ---
 
-## Limitations & Future Work
+## Current Limitations
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### Current Limitations
-
-**1. Dataset Size**
+### 1. Dataset Size
 - Only 2,997 samples used
 - Limited to 10GB RAM
 - CPU-only training
 
-**2. Dataset Domain**
+### 2. Dataset Domain
 - 20 Newsgroups (technical text)
 - Not actual sentiment data
 - Binary classification only
 
-**3. Model Capacity**
+### 3. Model Capacity
 - Smaller models due to memory
 - No multi-layer RNN/LSTM
 - Limited transformer layers
 
-**4. Training Time**
+### 4. Training Time
 - CPU-only (slow)
 - Sequential training (longer)
 - Limited hyperparameter search
 
-</div>
-<div>
+---
 
-### Future Improvements
+## Future Improvements
 
-**1. Scale Up**
+### 1. Scale Up
 - Use full 20 Newsgroups (~18K samples)
 - Try IMDB dataset (50K reviews)
 - GPU training for speed
 
-**2. Enhanced Models**
+### 2. Enhanced Models
 - Multi-layer bidirectional LSTM
 - Larger transformer (6+ layers)
 - Full BERT fine-tuning
 - Ensemble methods
 
-**3. Advanced Techniques**
+### 3. Advanced Techniques
 - Data augmentation (back-translation)
 - Active learning
 - Few-shot learning
 - Prompt engineering for LLMs
 
-**4. Production Features**
-- Model quantization (INT8)
-- ONNX export
-- API deployment
-- Monitoring dashboard
-
-</div>
-</div>
+### 4. Production Features
+- Model quantization (INT8) · ONNX export · API deployment · Monitoring dashboard
 
 ---
 
@@ -1853,60 +1809,49 @@ Each innovation addresses limitations of predecessors
 
 ---
 
-## Final Takeaways
+## Final Takeaways: For Practitioners
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-
-### For Practitioners
-
-**1. Start Simple**
+### 1. Start Simple
 - Baseline first (RNN/LSTM)
 - Then scale up (Transformer)
 - Finally transfer learning (BERT)
 
-**2. Data Quality Matters**
+### 2. Data Quality Matters
 - Verify at every step
 - Handle edge cases
 - Document transformations
 
-**3. Balance Regularization**
+### 3. Balance Regularization
 - Multiple techniques together
 - Tune based on train-val gap
 - Monitor continuously
 
-**4. Hardware Awareness**
-- Know your constraints
-- Optimize accordingly
-- Sequential if needed
+### 4. Hardware Awareness
+- Know your constraints · Optimize accordingly · Sequential if needed
 
-</div>
-<div>
+---
 
-### For Researchers
+## Final Takeaways: For Researchers
 
-**1. Architecture Design**
+### 1. Architecture Design
 - Attention mechanisms are powerful
 - Pre-training provides huge gains
 - Efficiency matters in production
 
-**2. Evaluation**
+### 2. Evaluation
 - Test set is sacred (never touch)
 - Validation for all decisions
 - Multiple metrics (not just accuracy)
 
-**3. Reproducibility**
+### 3. Reproducibility
 - Set random seeds
 - Document hyperparameters
 - Share code and data
 
-**4. Transfer Learning**
+### 4. Transfer Learning
 - Pre-trained models when possible
 - Fine-tuning > training from scratch
 - Domain adaptation techniques
-
-</div>
-</div>
 
 ---
 layout: center
