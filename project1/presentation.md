@@ -108,10 +108,17 @@ Understanding the Problem and Methodology
 
 ### Dataset Characteristics
 - **Source**: 20 Newsgroups corpus
+- **Original URL**: http://qwone.com/~jason/20Newsgroups/
+- **Scikit-learn Documentation**: https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset
 - **Original Size**: ~18,887 documents
 - **Task Adaptation**: Binary sentiment classification
 - **Categories**: 20 different newsgroup topics
 - **Challenge**: Technical/scientific text (not movie reviews)
+
+### Note on IMDB Dataset
+- **Mentioned in Project**: IMDB Movie Review Dataset (25,000 positive/negative reviews)
+- **IMDB URL**: https://ai.stanford.edu/~amaas/data/sentiment/
+- **Actual Implementation**: Used 20 Newsgroups instead for computational efficiency
 
 ### Data Split
 - **Training**: 2,000 samples (60%)
@@ -1976,8 +1983,9 @@ jupyter lab Sentiment_Analysis_Project.ipynb
 6. **DistilBERT**: Sanh et al., "DistilBERT, a distilled version of BERT" (2019)
 
 ### Datasets
-- 20 Newsgroups: http://qwone.com/~jason/20Newsgroups/
-- IMDB Reviews: https://ai.stanford.edu/~amaas/data/sentiment/
+- **20 Newsgroups**: http://qwone.com/~jason/20Newsgroups/
+- **20 Newsgroups (sklearn)**: https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset
+- **IMDB Reviews**: https://ai.stanford.edu/~amaas/data/sentiment/
 
 ### Tools & Libraries
 - PyTorch: https://pytorch.org/
