@@ -1,0 +1,21 @@
+{
+  "vae": {
+    "final_elbo": 200.8167641026199,
+    "final_recon_loss": 139.5633919102371,
+    "final_kl_loss": 61.25337216808538,
+    "linear_probe_accuracy": 0.3769
+  },
+  "gan": {
+    "final_d_loss": 0.15864394666852466,
+    "final_g_loss": 3.866036313354589,
+    "fid_note": "Run pytorch-fid to get FID score"
+  },
+  "hyperparameters": {
+    "seed": 42,
+    "vae_epochs": 20,
+    "gan_epochs": 40,
+    "vae_latent_dim": 64,
+    "gan_z_dim": 100,
+    "batch_size": 64
+  }
+}
