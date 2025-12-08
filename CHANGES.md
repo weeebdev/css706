@@ -7,24 +7,25 @@
 Implemented a comprehensive Jupyter notebook for **Project 2 - Reinforcement Learning** with the following features:
 
 #### Notebook Structure (28 cells):
-1. **Introduction** - Overview of the project goals
-2. **Installation & Setup** - Package installation and imports
-3. **Environment Setup** - BipedalWalker-v3 environment configuration and visualization
-4. **Algorithm Explanation** - Mathematical formulas for SAC, PPO, TD3
-5. **Custom Training Callback** - Tracking training metrics during learning
-6. **Training Configuration** - Hyperparameters for all three algorithms
-7. **Training Loop** - Trains SAC, PPO, and TD3 on BipedalWalker-v3
-8. **Training Visualization** - Learning curves, performance comparison, training time
-9. **Model Evaluation** - Evaluate trained models over 10 episodes
-10. **Agent Behavior Visualization** - Frame montage of best agent
-11. **Detailed Comparison** - Summary table and radar chart
-12. **Conclusion** - Key findings and recommendations
-13. **Appendix** - Algorithm pseudocode
+1. **Introduction** - Project overview with requirements checklist
+2. **Installation** - Package installation with CUDA support
+3. **Import Libraries** - All dependencies including SAC, DDPG, PPO, TD3
+4. **Environment Setup** - BipedalWalker-v3 configuration and visualization
+5. **Algorithm Explanation** - Mathematical formulas for all 4 algorithms
+6. **Custom Training Callback** - Tracking training metrics
+7. **Training Configuration** - Hyperparameters for all 4 algorithms
+8. **Train All Algorithms** - Main training loop (BEFORE visualizations)
+9. **Training Visualization** - Learning curves, performance bars
+10. **Model Evaluation** - Evaluate trained models
+11. **Agent Behavior** - Frame montage of best agent
+12. **Summary & Comparison** - Table and key findings
+13. **Appendix** - Unfolded algorithm pseudocode for all 4 algorithms
 
-#### Algorithms Implemented:
+#### Algorithms Implemented (as per requirements):
 - **SAC** (Soft Actor-Critic) - Off-policy with entropy regularization
+- **DDPG** (Deep Deterministic Policy Gradient) - Deterministic policy
 - **PPO** (Proximal Policy Optimization) - On-policy with clipped objective
-- **TD3** (Twin Delayed DDPG) - Off-policy with twin critics
+- **TD3** (Twin Delayed DDPG) - Improved DDPG with twin critics
 
 #### Visualizations Generated:
 - `environment_preview.png` - Environment snapshot
