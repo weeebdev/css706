@@ -43,5 +43,22 @@ Implemented a comprehensive Jupyter notebook for **Project 2 - Reinforcement Lea
 - `pandas`
 - `numpy`
 
+### Created: `p1/presentation.md`
+
+Slidev presentation covering the entire project with 18 slides:
+- Project overview and objectives
+- Environment description (BipedalWalker-v3)
+- Algorithm explanations with pseudocode (SAC, DDPG, PPO, TD3)
+- Training configuration and hyperparameters
+- Results visualization and comparison
+- Key findings and recommendations
+- Conclusion
+
+To run the presentation:
+```bash
+cd /home/sduailab/important_dont_touch/p1
+npx slidev presentation.md
+```
+
 
 
