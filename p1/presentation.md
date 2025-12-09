@@ -7,15 +7,22 @@ lineNumbers: false
 info: |
   ## Project 2: Reinforcement Learning
   Training RL agents for Drone Hover (Gym-PyBullet-Drones)
+  **Authors:** Adil Akhmetov, Perizat Yessenova
 drawings:
   persist: false
 transition: slide-left
 title: Reinforcement Learning - Drone Hover
 mdc: true
+css:
+  - ./styles.css
 ---
 
 # Reinforcement Learning
 ## Training Agents for Drone Hover (HoverAviary)
+
+<div class="mt-4 text-sm opacity-75">
+  By Adil Akhmetov &amp; Perizat Yessenova
+</div>
 
 <div class="pt-12">
   <span class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
@@ -423,10 +430,7 @@ layout: end
 
 # Questions?
 
-<div class="text-center mt-8">
-  <p class="text-lg opacity-75">
-    All code and results available in the drone notebook
-  </p>
-  <code class="text-sm">p1/drone_training.ipynb</code>
-</div>
+All code and results are available in the drone notebook:
+
+`p1/drone_training.ipynb`
 

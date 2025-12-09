@@ -4,17 +4,40 @@ title: Deep Q-Learning Projects
 info: |
   ## Deep Q-Learning Implementation
   Two practical applications of DQN algorithm
+  **Authors:** Adil Akhmetov, Perizat Yessenova
 class: text-center
 highlighter: shiki
 drawings:
   persist: false
 transition: slide-left
 mdc: true
+css:
+  - ./styles.css
 ---
+
+<style>
+/* Allow slide content to scroll instead of overflowing */
+:global(.slidev-page) {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+:global(.slidev-layout) {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+:global(.slidev-layout .slidev-content) {
+  max-height: none;
+  overflow-y: visible;
+}
+</style>
 
 # Deep Q-Learning Projects
 
 ## Final Project Presentation
+
+<div class="mt-4 text-sm opacity-75">
+  By Adil Akhmetov &amp; Perizat Yessenova
+</div>
 
 <div class="pt-12">
   <span class="px-2 py-1">
