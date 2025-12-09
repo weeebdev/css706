@@ -84,7 +84,7 @@ layout: section
 Train an agent to play Breakout by breaking bricks with a ball
 
 ## Environment
-- **Platform**: Gymnasium (BreakoutNoFrameskip-v4)
+- **Platform**: Gymnasium ALE/Breakout-v5
 - **Original frame**: 210×160 RGB pixels
 - **Reward**: +1 per brick destroyed
 - **Episode ends**: When ball is missed
@@ -368,6 +368,20 @@ layout: section
 
 # Task 2: Traffic Light Control
 ## Adaptive DQN for Real-World Application
+
+---
+
+# Breakout: Current Training Progress
+
+## 5k-episode run (in-progress)
+- Episodes 120-220: rewards ≈ 0.0–0.5, ε ≈ 0.92–0.95
+- Episodes 1350-1380: rewards ≈ 2.0–3.1, ε ≈ 0.19–0.22
+- Loss rises from ~0.001 to ~0.010 as Q-values become meaningful (expected)
+
+## Takeaways
+- Healthy learning curve: rewards increasing as ε decays
+- Still early-stage; expect bigger gains after ε < 0.1 and more training
+- Next steps: keep training to 5k–10k+, consider slower ε decay if plateaus
 
 ---
 

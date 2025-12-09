@@ -60,5 +60,23 @@ cd /home/sduailab/important_dont_touch/p1
 npx slidev presentation.md
 ```
 
+### Created: `p1/drone_training.ipynb` (FOR FULL POINTS)
+
+Jupyter notebook using **Gym-PyBullet-Drones** HoverAviary environment:
+- Uses `HoverAviary` from gym-pybullet-drones (FULL POINTS option)
+- Trains SAC, DDPG, PPO, TD3 algorithms
+- 50,000 timesteps as specified in requirements
+- Includes 3D trajectory visualization
+- PyBullet physics simulation
+
+To run:
+```bash
+cd /home/sduailab/important_dont_touch/p1
+conda activate rl_env
+jupyter notebook drone_training.ipynb
+```
+
+**Note:** Use `drone_training.ipynb` for FULL POINTS, `rl_training.ipynb` for BipedalWalker (max 80 points).
+
 
 
