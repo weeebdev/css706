@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Sentiment Analysis with Neural Networks - Slidev Presentation",
   "scripts": {
-    "dev": "slidev presentation.md",
-    "build": "slidev build presentation.md",
-    "export": "slidev export presentation.md"
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export"
   },
   "dependencies": {
     "@slidev/cli": "latest",
