@@ -113,6 +113,44 @@ env = HoverAviary(
 </div>
 
 ---
+layout: two-cols
+---
+
+# Unfolded Algorithms (Pseudocode)
+
+## Actor-Critic Core (SAC / TD3 / DDPG)
+```text
+Initialize actor πθ, critics Qφ1,Qφ2, target networks
+Replay buffer D
+for each step:
+  observe s, sample a ~ πθ(s)+noise, step env -> (s', r, done)
+  store (s,a,r,s',done) in D
+  sample batch B from D
+  y = r + γ * (1-done) * min_i Qφi_target(s', πθ_target(s'))
+  Update critics to minimize (Qφi(s,a) - y)^2
+  if step % policy_delay == 0:
+    Update actor to maximize Qφ1(s, πθ(s))
+    Soft-update targets: θ_target ← τθ + (1-τ)θ_target; same for φi
+```
+
+## PPO (Clipped Objective)
+```text
+Collect trajectories with πθ_old for T steps
+Compute advantages Â via GAE
+for K epochs:
+  L_clip = E[min(r_t(θ) Â_t, clip(r_t(θ),1-ε,1+ε) Â_t)]
+  Update θ to maximize L_clip
+  Value/networks updated with MSE to returns
+r_t(θ) = πθ(a_t|s_t) / πθ_old(a_t|s_t)
+Clip keeps updates stable
+```
+
+## DDPG vs TD3 vs SAC
+- DDPG: single critic, deterministic actor, OU/GA noise.
+- TD3: twin critics, delayed actor update, target policy smoothing.
+- SAC: twin critics, stochastic actor, entropy term α·H(π) encourages exploration.
+
+---
 layout: center
 class: text-center
 ---

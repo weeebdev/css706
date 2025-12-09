@@ -371,17 +371,42 @@ layout: section
 
 ---
 
-# Breakout: Current Training Progress
+# Breakout: Training Summary
 
-## 5k-episode run (in-progress)
+## 5k-episode run (completed)
 - Episodes 120-220: rewards ≈ 0.0–0.5, ε ≈ 0.92–0.95
 - Episodes 1350-1380: rewards ≈ 2.0–3.1, ε ≈ 0.19–0.22
-- Loss rises from ~0.001 to ~0.010 as Q-values become meaningful (expected)
+- Episodes 4900-5000: rewards ≈ 4.9, ε ≈ 0.01
+- Overall (full 5k): avg reward ≈ 4.0, avg bricks ≈ 4.0
 
-## Takeaways
-- Healthy learning curve: rewards increasing as ε decays
-- Still early-stage; expect bigger gains after ε < 0.1 and more training
-- Next steps: keep training to 5k–10k+, consider slower ε decay if plateaus
+---
+
+# Breakout: Evaluation Snapshot
+
+| Segment | Episodes | Avg Reward | Avg Bricks | Notes |
+|---------|----------|------------|------------|-------|
+| Early | 120–220 | ~0.3 | ~0.3 | Mainly launching ball, rare hits |
+| Mid | 1350–1380 | ~2.6 | ~2.6 | Tracks ball, clears a few bricks per life |
+| Completed run | 4900–5000 | ~4.9 | ~4.9 | Stable volleys; still drops after sharp wall bounces |
+
+## Interpretation
+- Average reward == bricks destroyed (unit reward per brick)
+- Agent still loses balls after side-wall rebounds; needs longer training
+- ε already <0.2 in mid segment; expect further gains as ε→0.01
+
+---
+
+# Breakout: Behavior Notes
+
+<v-clicks>
+
+- Consistently launches ball quickly (FIRE) after reset
+- Keeps paddle under ball for straight trajectories
+- Misses after sharp wall bounces → indicates need for more training / frame history
+- No reward hacking observed; gameplay aligns with intended rules
+- Behavior visualization: training curves (reward/loss/ε) via `plot_training_history` in `pf/final_project.ipynb`; gameplay render/GIF not included due to deadline constraints
+
+</v-clicks>
 
 ---
 
