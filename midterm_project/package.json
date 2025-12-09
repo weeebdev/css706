@@ -1,0 +1,19 @@
+{
+  "name": "vae-vs-gan-presentation",
+  "version": "1.0.0",
+  "description": "Slidev presentation for VAE vs DCGAN comparative analysis",
+  "scripts": {
+    "dev": "slidev slides.md",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md",
+    "export-pdf": "slidev export slides.md --format pdf --output slides.pdf"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.48.0",
+    "@slidev/theme-seriph": "^0.23.0"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.40.0"
+  }
+}
+
